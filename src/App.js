@@ -6,7 +6,7 @@ export default function App() {
   return (
     <div className="App">
       <div className="container">
-        <Weather />
+        <Weather city="Manchester"/>
         <footer>
           This project was coded by Praise Okelade and is open-sourced on{" "}
           <a
