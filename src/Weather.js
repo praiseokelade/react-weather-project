@@ -4,7 +4,6 @@ import axios from "axios";
 import WeatherInfo from "./WeatherInfo";
 
 export default function Weather(props) {
-  let [ready, setReady] = useState(false);
   let [city, setCity] = useState(props.city);
   let [weatherData, setWeatherData] = useState({ ready: false });
 
