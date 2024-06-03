@@ -18,7 +18,7 @@ export default function Weather(props) {
       icon_url: response.data.condition.icon_url,
       city: response.data.city,
       date: new Date(response.data.time * 1000),
-      coordinates: response.data.coord,
+      coordinates: response.data.coordinates,
     });
   }
 
@@ -61,7 +61,7 @@ export default function Weather(props) {
           </div>
         </form>
         <WeatherInfo data={weatherData} />
-        <WeatherForecast coordinates={weatherData.coordinates} />
+        <WeatherForecast forecast={weatherData.coordinates} />
       </div>
     );
   } else {

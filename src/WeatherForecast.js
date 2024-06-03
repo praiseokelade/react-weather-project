@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./WeatherForecast.css";
 import axios from "axios";
 import WeatherDayForecast from "./WeatherDayForecast.js";
 
 export default function WeatherForecast(props) {
-  let [dailyForecast, setDailyForecast] = useState("");
+  let [forecast, setForecast] = useState("");
   let [loaded, setLoaded] = useState(false);
 
+  useEffect(() => {
+    setLoaded(false);
+  }, [props]);
+
   function manageResponse(response) {
-    setDailyForecast(response.data.daily);
+    setForecast(response.data.daily);
     setLoaded(true);
   }
 
@@ -16,15 +20,21 @@ export default function WeatherForecast(props) {
     return (
       <div className="WeatherForecast">
         <div className="row">
-          <div className="col">
-            <WeatherDayForecast date={dailyForecast[0]} />
-          </div>
+          {forecast && forecast.map(function (dailyForecast, index) {
+            if (index < 5) {
+              return (
+                <div className="col" key={index}>
+                  <WeatherDayForecast data={dailyForecast} />
+                </div>
+              );
+            }
+          })}
         </div>
       </div>
     );
   } else {
-    let longitude = props.data.coordinates.longitude;
-    let latitude = props.data.coordinates.latitude;
+    let longitude = props.longitude;
+    let latitude = props.latitude;
     let apiKey = `017e2af483beec2b2e23fafdtf1f298o`;
     let apiUrl = `https://api.shecodes.io/weather/v1/forecast?lat=${latitude}&lon=${longitude}&key=${apiKey}&units=metric`;
     axios.get(apiUrl).then(manageResponse);
